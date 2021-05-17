@@ -64,7 +64,11 @@ const ChatRoom = () => {
       <div className='h-screen w-6/12 border-2 border-white rounded-lg p-2'>
         <div className='MessageContainer h-5/6 overflow-y-auto'>
           {allMessages.map((message) => (
-            <Message text={message.text} name={message.name} />
+            <Message
+              text={message.text}
+              name={message.name}
+              isOwnMessage={username === message.name}
+            />
           ))}
         </div>
         <ChatInputBox send={sendMessage} />
