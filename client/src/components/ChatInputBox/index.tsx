@@ -20,6 +20,7 @@ const ChatInput = ({ send }: Props) => {
         value={text}
         onChange={(event) => setText(event.target.value)}
         placeholder='Enter your message...'
+        onKeyPress={(event) => (event.key === 'Enter' ? sendText() : null)}
       />
       <Button onClick={sendText} label='send' />
     </div>
