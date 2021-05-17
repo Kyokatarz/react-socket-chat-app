@@ -1,58 +1,73 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import queryString from 'query-string'
+import clsx from 'clsx'
 import io from 'socket.io-client'
 
 import { ENDPOINT } from '../../App'
+import Message from '../../components/Message'
+import ChatInputBox from '../../components/ChatInputBox'
+import { MessageType } from '../../types'
 
 let socket: any
 
 const ChatRoom = () => {
   const location = useLocation()
+  const history = useHistory()
 
-  const [message, setMessage] = useState('')
-  const [allMessages, setAllMessages] = useState<string[]>([])
-
+  const [allMessages, setAllMessages] = useState<MessageType[]>([])
+  const [username, setUsername] = useState<string>('')
   useEffect(() => {
-    const { room, name } = queryString.parse(location.search)
+    const { room, name } = queryString.parse(location.search) as {
+      room: string
+      name: string
+    }
+
+    setUsername(name)
 
     socket = io(ENDPOINT)
 
-    socket.emit('join', { room, name }, () => {})
+    socket.emit('join', { room, name }, (err: any) => {
+      if (err) {
+        history.push('/')
+      }
+    })
 
     return () => {
       socket.off()
     }
-  }, [location])
+  }, [])
 
   /**Listen to message event from backend */
   useEffect(() => {
-    socket.on('message', (message: string) => {
-      setAllMessages([...allMessages, message])
+    socket.on('message', (message: MessageType) => {
+      setAllMessages((prev) => [...prev, message])
     })
-  }, [allMessages])
+  }, [])
 
   /**Function for sending message */
-  const sendMessage = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    event.preventDefault()
-    if (message) {
-      socket.emit('sendMessage', message, () => setMessage(''))
+  const sendMessage = (text: string) => {
+    if (text) {
+      socket.emit('sendMessage', text, () => {
+        setAllMessages([...allMessages, { text, name: username }])
+      })
     }
   }
 
-  console.log(message, allMessages)
+  useEffect(() => {
+    console.log(allMessages)
+  })
 
   return (
     <div>
-      <input
-        value={message}
-        onChange={(event) => setMessage(event.target.value)}
-        onKeyPress={(event) =>
-          event.key === 'Enter' ? sendMessage(event) : null
-        }
-      />
+      <div className='MessageContainer'>
+        {allMessages.map((message) => (
+          <Message text={message.text} name={message.name} />
+        ))}
+      </div>
+      <ChatInputBox send={sendMessage} />
     </div>
   )
 }
 
-export default ChatRoom
+export default React.memo(ChatRoom)

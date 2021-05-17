@@ -6,12 +6,12 @@ export const addUser = ({ id, name, room }: User) => {
   name = name.trim().toLowerCase()
   room = room.trim().toLowerCase()
 
-  console.log({ id, name, room })
   const existingUser = users.find(
     (user) => user.name === name && user.room === room
   )
 
   if (existingUser) {
+    console.error('Username is taken')
     return { error: 'Username is taken!' }
   }
   const user = { id, name, room }

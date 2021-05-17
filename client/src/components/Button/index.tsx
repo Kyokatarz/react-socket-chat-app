@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {
   label: string
-  onClick?: (p: unknown) => void
+  onClick?: (p: any) => void
 }
 
 const Button = ({ label, onClick }: Props) => {
