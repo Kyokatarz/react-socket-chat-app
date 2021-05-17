@@ -30,13 +30,13 @@ io.on('connection', (socket) => {
       /**Sending a message to the user */
       socket.emit('message', {
         name: 'admin',
-        text: `${user.name}, welcome to ${user.room}`,
+        text: `${user.name}, welcome to "${user.room}"`,
       })
 
       /**Sending a message to the other users */
       socket.broadcast.to(user.room).emit('message', {
         name: 'admin',
-        text: `${user.name} has join ${user.room}`,
+        text: `${user.name} has join the chat!`,
       })
 
       socket.join(user.room)
@@ -52,7 +52,13 @@ io.on('connection', (socket) => {
     })
 
     /**On disconnect */
+
     socket.on('disconnect', () => {
+      const user = getUser(socket.id)
+      io.to(user.room).emit('message', {
+        name: 'admin',
+        text: `${user.name} has left the chat!`,
+      })
       removeUser(socket.id)
       console.log('Someone left the chat!')
     })
