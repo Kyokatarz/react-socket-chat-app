@@ -5,10 +5,21 @@ type Props = {
   label: string
   size?: 'sm' | 'md' | 'lg'
   onClick?: (p: any) => void
-  color?: string
+  backgroundColor?: string
+  color?: 'black' | 'white'
+  textColor?: 'black' | 'white'
+  customProps?: string
 }
 
-const Button = ({ label, onClick, size = 'md', color }: Props) => {
+const Button = ({
+  label,
+  onClick,
+  size = 'md',
+  backgroundColor,
+  color = 'black',
+  textColor = 'black',
+  customProps,
+}: Props) => {
   let buttonSize
 
   switch (size) {
@@ -31,11 +42,17 @@ const Button = ({ label, onClick, size = 'md', color }: Props) => {
       buttonSize = 'px-6 py-2'
   }
 
-  const buttonClass = clsx('border-2', buttonSize, `bg-${color}`)
-
   return (
-    <button className={buttonClass} onClick={onClick}>
-      {label}
+    <button
+      className={clsx(
+        `border-2 border-${color}`,
+        buttonSize,
+        `bg-${backgroundColor}`,
+        customProps
+      )}
+      onClick={onClick}
+    >
+      <span className={`text-${textColor}`}>{label}</span>
     </button>
   )
 }
