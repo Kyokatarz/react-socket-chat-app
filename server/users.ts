@@ -6,6 +6,7 @@ export const addUser = ({ id, name, room }: User) => {
   name = name.trim().toLowerCase()
   room = room.trim().toLowerCase()
 
+  console.log({ id, name, room })
   const existingUser = users.find(
     (user) => user.name === name && user.room === room
   )
@@ -26,9 +27,7 @@ export const removeUser = (id: string) => {
   }
 }
 
-export const getUser = (id: string) => {
-  const user = users.find((user) => user.id === id)
-}
+export const getUser = (id: string) => users.find((user) => user.id === id)
 
 export const getUsersInRoom = (room: string) =>
   users.filter((user) => user.room === room)
