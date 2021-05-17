@@ -17,7 +17,7 @@ const ChatInput = ({ send }: Props) => {
   return (
     <div>
       <input
-        className='m-1'
+        className='p-3 w-full my-1 rounded-sm'
         value={text}
         onChange={(event) => setText(event.target.value)}
         placeholder='Enter your message...'
@@ -30,6 +30,7 @@ const ChatInput = ({ send }: Props) => {
         backgroundColor='green-400'
         textColor='white'
         color='white'
+        customProps='w-full'
       />
     </div>
   )
