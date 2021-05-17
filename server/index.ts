@@ -29,13 +29,13 @@ io.on('connection', (socket) => {
 
       /**Sending a message to the user */
       socket.emit('message', {
-        user: 'admin',
+        name: 'admin',
         text: `${user.name}, welcome to ${user.room}`,
       })
 
       /**Sending a message to the other users */
       socket.broadcast.to(user.room).emit('message', {
-        user: 'admin',
+        name: 'admin',
         text: `${user.name} has join ${user.room}`,
       })
 
@@ -49,7 +49,6 @@ io.on('connection', (socket) => {
       const user = getUser(socket.id)
 
       io.to(user.room).emit('message', { name: user.name, text: message })
-      callback()
     })
 
     /**On disconnect */
