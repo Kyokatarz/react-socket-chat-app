@@ -8,6 +8,7 @@ import { ENDPOINT } from '../../App'
 import Message from '../../components/Message'
 import ChatInputBox from '../../components/ChatInputBox'
 import { MessageType } from '../../types'
+import styles from './ChatRoom.module.css'
 
 let socket: any
 
@@ -41,16 +42,16 @@ const ChatRoom = () => {
   /**Listen to message event from backend */
   useEffect(() => {
     socket.on('message', (message: MessageType) => {
+      console.log('Message event was called!')
       setAllMessages((prev) => [...prev, message])
     })
   }, [])
 
   /**Function for sending message */
   const sendMessage = (text: string) => {
+    console.log('Send message method was called!')
     if (text) {
-      socket.emit('sendMessage', text, () => {
-        setAllMessages([...allMessages, { text, name: username }])
-      })
+      socket.emit('sendMessage', text)
     }
   }
 
@@ -59,13 +60,15 @@ const ChatRoom = () => {
   })
 
   return (
-    <div>
-      <div className='MessageContainer'>
-        {allMessages.map((message) => (
-          <Message text={message.text} name={message.name} />
-        ))}
+    <div className='h-screen flex justify-center'>
+      <div className='h-screen w-6/12 border-2 border-white rounded-lg'>
+        <div className='MessageContainer h-5/6'>
+          {allMessages.map((message) => (
+            <Message text={message.text} name={message.name} />
+          ))}
+        </div>
+        <ChatInputBox send={sendMessage} />
       </div>
-      <ChatInputBox send={sendMessage} />
     </div>
   )
 }
