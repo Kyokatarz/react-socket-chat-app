@@ -62,7 +62,7 @@ const ChatRoom = () => {
   return (
     <div className='h-screen flex justify-center'>
       <div className='h-screen w-6/12 border-2 border-white rounded-lg'>
-        <div className='MessageContainer h-5/6'>
+        <div className='MessageContainer h-5/6 overflow-y-auto'>
           {allMessages.map((message) => (
             <Message text={message.text} name={message.name} />
           ))}
