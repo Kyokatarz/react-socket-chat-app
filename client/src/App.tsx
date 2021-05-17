@@ -1,25 +1,24 @@
 import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import logo from './logo.svg'
 import './App.css'
+import ChatRoom from './components/ChatRoom'
+import Join from './components/Join'
+
+export const ENDPOINT =
+  process.env.NODE_ENV === 'development' ? 'localhost:5000' : 'undefined'
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Route exact path='/'>
+          <Join />
+        </Route>
+        <Route exact path='/chat'>
+          <ChatRoom />
+        </Route>
+      </Router>
     </div>
   )
 }
