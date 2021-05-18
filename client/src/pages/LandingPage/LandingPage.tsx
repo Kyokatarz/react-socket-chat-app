@@ -38,7 +38,6 @@ const Join = () => {
               label='Join'
               backgroundColor='yellow-400'
               color='white'
-              textColor='white'
               customProps='m-2'
             />
           </Link>

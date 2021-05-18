@@ -7,7 +7,6 @@ type Props = {
   onClick?: (p: any) => void
   backgroundColor?: string
   color?: 'black' | 'white'
-  textColor?: 'black' | 'white'
   customProps?: string
 }
 
@@ -17,7 +16,6 @@ const Button = ({
   size = 'md',
   backgroundColor,
   color = 'black',
-  textColor = 'black',
   customProps,
 }: Props) => {
   let buttonSize
@@ -52,7 +50,7 @@ const Button = ({
       )}
       onClick={onClick}
     >
-      <span className={`text-${textColor}`}>{label}</span>
+      <span className={`text-${color}`}>{label}</span>
     </button>
   )
 }

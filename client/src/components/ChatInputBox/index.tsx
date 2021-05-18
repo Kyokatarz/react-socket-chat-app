@@ -28,7 +28,6 @@ const ChatInput = ({ send }: Props) => {
         label='Send'
         size='sm'
         backgroundColor='green-400'
-        textColor='white'
         color='white'
         customProps='w-full'
       />
