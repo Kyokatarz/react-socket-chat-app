@@ -5,7 +5,7 @@ import { createServer } from 'http'
 import router from './router'
 import { addUser, getUser, removeUser } from './users'
 
-const PORT = process.env.port || 5000
+const PORT = process.env.PORT || 5000
 
 const app = express()
 const server = createServer(app)
