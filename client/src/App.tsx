@@ -4,7 +4,9 @@ import Routes from './Routes'
 import './App.css'
 
 export const ENDPOINT =
-  process.env.NODE_ENV === 'development' ? 'localhost:5000' : 'undefined'
+  process.env.NODE_ENV === 'development'
+    ? 'localhost:5000'
+    : 'https://chat-app-kyo-katarz.herokuapp.com/'
 
 function App() {
   return (

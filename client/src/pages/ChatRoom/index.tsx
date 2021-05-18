@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import queryString from 'query-string'
-import clsx from 'clsx'
 import io from 'socket.io-client'
 
 import { ENDPOINT } from '../../App'
 import Message from '../../components/Message'
 import ChatInputBox from '../../components/ChatInputBox'
 import { MessageType } from '../../types'
-import styles from './ChatRoom.module.css'
 
 let socket: any
 
@@ -37,7 +35,7 @@ const ChatRoom = () => {
     return () => {
       socket.off()
     }
-  }, [])
+  }, [history, location])
 
   /**Listen to message event from backend */
   useEffect(() => {
