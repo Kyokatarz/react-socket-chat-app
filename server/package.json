@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch **/* --ext ts,json --ignore **/*.spec.ts --exec ts-node index.ts"
+    "build-ts": "tsc",
+    "start": "nodemon --watch **/* --ext ts,json --ignore **/*.spec.ts --exec ts-node index.ts",
+    "serve": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
