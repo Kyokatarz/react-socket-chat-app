@@ -6,7 +6,7 @@ import io from 'socket.io-client'
 import { ENDPOINT } from '../../App'
 import Message from '../../components/Message'
 import ChatInputBox from '../../components/ChatInputBox'
-import { MessageType } from '../../types'
+import { MessageType, User } from '../../types'
 
 let socket: any
 
@@ -16,6 +16,8 @@ const ChatRoom = () => {
 
   const [allMessages, setAllMessages] = useState<MessageType[]>([])
   const [username, setUsername] = useState<string>('')
+  const [usersInRoom, setUsersInRoom] = useState<User[]>([])
+
   useEffect(() => {
     const { room, name } = queryString.parse(location.search) as {
       room: string
@@ -37,8 +39,13 @@ const ChatRoom = () => {
     }
   }, [history, location])
 
-  /**Listen to message event from backend */
   useEffect(() => {
+    /**Listen to newUserJoinRoom event*/
+    socket.on('newUserJoinRoom', (payload: User[]) => {
+      console.log('New user event was called!')
+      setUsersInRoom(payload)
+    })
+    /**Listen to message event from backend */
     socket.on('message', (message: MessageType) => {
       console.log('Message event was called!')
       setAllMessages((prev) => [...prev, message])
@@ -54,7 +61,7 @@ const ChatRoom = () => {
   }
 
   useEffect(() => {
-    console.log(allMessages)
+    console.log({ allMessages, usersInRoom })
   })
 
   return (

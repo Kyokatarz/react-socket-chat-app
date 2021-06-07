@@ -3,7 +3,7 @@ import { Server } from 'socket.io'
 import { createServer } from 'http'
 
 import router from './router'
-import { addUser, getUser, removeUser } from './users'
+import { addUser, getUser, getUsersInRoom, removeUser } from './helpers/users'
 
 const PORT = process.env.PORT || 5000
 
@@ -39,6 +39,9 @@ io.on('connection', (socket) => {
         text: `${user.name} has join the chat!`,
       })
 
+      /**Emits event to update users in room in frontend */
+      const usersInRoom = getUsersInRoom(user.room)
+      console.log(socket.emit('newUserJoinRoom', usersInRoom))
       socket.join(user.room)
 
       callback()
